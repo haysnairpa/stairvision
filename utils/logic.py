@@ -4,8 +4,7 @@ from collections import deque
 from config import KP_CONF_THRESH, HAND_RADIUS, HAND_OVERLAP_RATIO, SMOOTH_FRAMES
 
 def is_on_stair(person_kpts, person_conf, stair_mask, h, w):
-    """Check if person is on stair based on hips & ankles."""
-    for sid in [11, 12, 15, 16]:  
+    for sid in [11, 12, 15, 16]:
         if person_kpts.shape[0] > sid and person_conf[sid] > KP_CONF_THRESH:
             sx, sy = int(person_kpts[sid][0]), int(person_kpts[sid][1])
             if 0 <= sx < w and 0 <= sy < h and stair_mask[sy, sx] > 0:
@@ -14,7 +13,6 @@ def is_on_stair(person_kpts, person_conf, stair_mask, h, w):
 
 def check_holding(person_idx, hid, person_kpts, person_conf, handrail_mask, h, w,
                   hand_history, status_memory):
-    """Check if a hand is holding the handrail."""
     if person_kpts.shape[0] <= hid or person_conf[hid] < KP_CONF_THRESH:
         return False, None
 
